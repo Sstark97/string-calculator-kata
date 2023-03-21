@@ -1,9 +1,9 @@
 const getCustomSeparatorIn = (theOperation: string) => (
-    theOperation[theOperation.lastIndexOf("/") + 1]
+    theOperation.substring(theOperation.lastIndexOf("/") + 1, theOperation.indexOf("\n"))
 )
 
 const getNumbersWithCustomSeparatorIn = (theOperation: string) => (
-    theOperation.substring(theOperation.lastIndexOf("\n") + 1, theOperation.length)
+    theOperation.substring(theOperation.indexOf("\n") + 1, theOperation.length)
 )
 
 const getNumbersIn = (theOperation: string) => {
