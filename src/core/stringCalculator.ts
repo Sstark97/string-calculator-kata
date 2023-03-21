@@ -20,11 +20,20 @@ const notAppearTwoSeparatorsTogetherIn = (theOperation: string) => {
     })
 }
 
-export const add = (theOperation: string) => {
-    notAppearTwoSeparatorsTogetherIn(theOperation)
-    if(theOperation && theOperation[theOperation.length - 1].match(/[,\n]/)) {
+const separatorNotAppearAtLastPositionIn = (theOperation: string) => {
+    const charAtLast = theOperation[theOperation.length - 1] ?? ""
+    const lastCharIsSeparator = charAtLast.match(/[,\n]/)
+    const theOperationIsNotEmpty = theOperation !== ""
+
+    if (theOperationIsNotEmpty && lastCharIsSeparator) {
         throw new Error("Number expected but EOF found.")
     }
+}
+
+export const add = (theOperation: string) => {
+    notAppearTwoSeparatorsTogetherIn(theOperation)
+    separatorNotAppearAtLastPositionIn(theOperation)
+
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
     const theOperationToIterate = getNumbersIn(theOperation)
