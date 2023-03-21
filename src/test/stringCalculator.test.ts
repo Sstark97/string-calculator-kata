@@ -28,4 +28,8 @@ describe("String Calculator", () => {
     it("should show an error if two separators together", () => {
         expect(() => add("175.2,\n35")).toThrow("Number expected but '\n' found at position 6.")
     })
+
+    it("don’t allow the input to end in a separator", () => {
+        expect(() => add("1,3,")).toThrow("Number expected but EOF found.")
+    })
 })
