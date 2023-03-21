@@ -1,6 +1,13 @@
-const getNumbersIn = (theOperation: string) => (
-    theOperation.split(/[,\n]/).map(number => parseFloat(number))
-)
+const getNumbersIn = (theOperation: string) => {
+    if(theOperation.startsWith("//")) {
+        const customSeparator = theOperation[theOperation.lastIndexOf("/") + 1]
+        const operation = theOperation.substring(theOperation.lastIndexOf("\n") + 1, theOperation.length)
+
+        return operation.split(customSeparator).map(number => parseFloat(number))
+    }
+
+    return theOperation.split(/[,\n]/).map(number => parseFloat(number))
+}
 
 const sumAllNumbersIn = (theOperationToIterate: number[]) => {
     const sumAll = (allNumbersAdded, currentNumber) => allNumbersAdded += currentNumber
