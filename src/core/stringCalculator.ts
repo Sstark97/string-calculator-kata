@@ -1,10 +1,13 @@
-const getCustomSeparatorIn = (theOperation: string) => (
-    theOperation.substring(theOperation.lastIndexOf("/") + 1, theOperation.indexOf("\n"))
-)
+const getCustomSeparatorIn = (theOperation: string) => {
+    const delimiterStart = theOperation.lastIndexOf("/") + 1
+    const delimiterEnd = theOperation.indexOf("\n")
+    return theOperation.substring(delimiterStart, delimiterEnd)
+}
 
-const getNumbersWithCustomSeparatorIn = (theOperation: string) => (
-    theOperation.substring(theOperation.indexOf("\n") + 1, theOperation.length)
-)
+const getNumbersWithCustomSeparatorIn = (theOperation: string) => {
+    const delimiterStart = theOperation.indexOf("\n") + 1
+    return theOperation.substring(delimiterStart, theOperation.length)
+}
 
 const getNumbersIn = (theOperation: string) => {
     const haveCustomSeparator = theOperation.startsWith("//");
