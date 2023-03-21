@@ -45,17 +45,31 @@ const separatorNotAppearAtLastPositionIn = (theOperation: string) => {
     }
 }
 
-export const add = (theOperation: string) => {
-    notAppearTwoSeparatorsTogetherIn(theOperation)
-    separatorNotAppearAtLastPositionIn(theOperation)
+const isHaveCustomAndGeneralDelimitersIn = (theOperation: string) => {
+    const haveCustomSeparator = theOperation.startsWith("//")
+    const haveGeneralSeparators = theOperation.includes(",") && theOperation.includes("\n")
+    const customSeparator = getCustomSeparatorIn(theOperation)
+    return haveCustomSeparator && haveGeneralSeparators && customSeparator;
+}
 
-    if(theOperation.startsWith("//") && theOperation.includes(",") && theOperation.includes("\n") && getCustomSeparatorIn(theOperation)) {
-        const customSeparator = getCustomSeparatorIn(theOperation)
+const getGeneralSeparatorIn = (numbers: string) => (
+    numbers.split("").find(char => char === "," || char === "\n")
+)
+
+const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
+    if (isHaveCustomAndGeneralDelimitersIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
-        const generalSeparator = numbers.split("").find(char => char === "," || char === "\n")
+        const customSeparator = getCustomSeparatorIn(theOperation)
+        const generalSeparator = getGeneralSeparatorIn(numbers)
         const generalSeparatorPos = numbers.indexOf(generalSeparator)
         throw new Error(`'${customSeparator}' expected but '${generalSeparator}' found at position ${generalSeparatorPos}.`)
     }
+}
+
+export const add = (theOperation: string) => {
+    notAppearTwoSeparatorsTogetherIn(theOperation)
+    separatorNotAppearAtLastPositionIn(theOperation)
+    customDelimiterAndGeneralNotTogetherIn(theOperation);
 
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
