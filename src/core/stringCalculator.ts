@@ -1,12 +1,17 @@
+const getCustomSeparatorIn = (theOperation: string) => (
+    theOperation[theOperation.lastIndexOf("/") + 1]
+)
+
+const getNumbersWithCustomSeparatorIn = (theOperation: string) => (
+    theOperation.substring(theOperation.lastIndexOf("\n") + 1, theOperation.length)
+)
+
 const getNumbersIn = (theOperation: string) => {
-    if(theOperation.startsWith("//")) {
-        const customSeparator = theOperation[theOperation.lastIndexOf("/") + 1]
-        const operation = theOperation.substring(theOperation.lastIndexOf("\n") + 1, theOperation.length)
+    const haveCustomSeparator = theOperation.startsWith("//");
+    const numbersInTheOperation = haveCustomSeparator ? getNumbersWithCustomSeparatorIn(theOperation) : theOperation
+    const currentSeparator = haveCustomSeparator ? getCustomSeparatorIn(theOperation) : /[,\n]/
 
-        return operation.split(customSeparator).map(number => parseFloat(number))
-    }
-
-    return theOperation.split(/[,\n]/).map(number => parseFloat(number))
+    return numbersInTheOperation.split(currentSeparator).map(number => parseFloat(number))
 }
 
 const sumAllNumbersIn = (theOperationToIterate: number[]) => {
