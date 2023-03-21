@@ -1,8 +1,11 @@
 export const add = (theOperation: string) => {
-    const emptyOperation = "0";
-    const theOperationIsNotEmpty = theOperation !== "";
-    if(theOperation[0] && theOperation[2]) {
-        return (parseInt(theOperation[0]) + parseInt(theOperation[2])).toString()
+    const emptyOperation = "0"
+    const theOperationIsNotEmpty = theOperation !== ""
+    const firstOperating = theOperation[0]
+    const secondOperating = theOperation[2]
+    if(firstOperating && secondOperating) {
+        const sum = parseInt(firstOperating) + parseInt(secondOperating);
+        return sum.toString()
     }
     return theOperationIsNotEmpty ? theOperation : emptyOperation
 }
