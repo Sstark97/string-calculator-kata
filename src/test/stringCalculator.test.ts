@@ -24,4 +24,8 @@ describe("String Calculator", () => {
     it("allow to sum numbers with decimals", () => {
         expect(add("1.5,2.5")).toBe("4")
     })
+
+    it("should show an error if two separators together", () => {
+        expect(() => add("175.2,\n35")).toThrow("Number expected but '\n' found at position 6.")
+    })
 })
