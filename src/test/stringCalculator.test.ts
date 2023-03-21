@@ -8,4 +8,8 @@ describe("String Calculator", () => {
     it("should be the same number if the parameter contains only one number", () => {
         expect(add("1")).toBe("1")
     })
+
+    it("should add two numbers separated by commas", () => {
+        expect(add("1,2")).toBe("3")
+    })
 })
