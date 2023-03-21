@@ -1,10 +1,10 @@
 export const add = (theOperation: string) => {
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
-    const firstOperating = theOperation[0]
-    const secondOperating = theOperation[2]
-    if(firstOperating && secondOperating) {
-        const sum = parseInt(firstOperating) + parseInt(secondOperating);
+    const theOperationToIterate = theOperation.split(",").map(number => parseInt(number))
+
+    if(theOperationIsNotEmpty && theOperationToIterate.length > 0) {
+        const sum = theOperationToIterate.reduce((allNumbersAdded, currentNumber) => allNumbersAdded += currentNumber, 0);
         return sum.toString()
     }
     return theOperationIsNotEmpty ? theOperation : emptyOperation
