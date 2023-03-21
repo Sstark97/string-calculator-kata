@@ -22,7 +22,9 @@ const notAppearTwoSeparatorsTogetherIn = (theOperation: string) => {
 
 export const add = (theOperation: string) => {
     notAppearTwoSeparatorsTogetherIn(theOperation)
-
+    if(theOperation && theOperation[theOperation.length - 1].match(/[,\n]/)) {
+        throw new Error("Number expected but EOF found.")
+    }
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
     const theOperationToIterate = getNumbersIn(theOperation)
