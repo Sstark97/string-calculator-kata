@@ -10,7 +10,7 @@ const getNumbersWithCustomSeparatorIn = (theOperation: string) => {
 }
 
 const getNumbersIn = (theOperation: string) => {
-    const haveCustomSeparator = theOperation.startsWith("//");
+    const haveCustomSeparator = theOperation.startsWith("//")
     const numbersInTheOperation = haveCustomSeparator ? getNumbersWithCustomSeparatorIn(theOperation) : theOperation
     const currentSeparator = haveCustomSeparator ? getCustomSeparatorIn(theOperation) : /[,\n]/
 

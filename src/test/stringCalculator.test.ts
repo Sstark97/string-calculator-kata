@@ -48,4 +48,8 @@ describe("String Calculator with custom separators", () => {
     it("allow the method to handle with a delimiter to have more than one length", () => {
         expect(add("//sep\n2sep3")).toBe("5")
     })
+
+    it("show an error message if text includes custom delimiter and general delimiters", () => {
+        expect(() => add("//|\n1|2,3")).toThrow("'|' expected but ',' found at position 3.")
+    })
 })
