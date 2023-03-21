@@ -1,3 +1,3 @@
 export const add = (theOperation: string) => {
-    return undefined
+    return "0"
 }
