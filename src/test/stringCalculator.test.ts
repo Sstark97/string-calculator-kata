@@ -16,4 +16,8 @@ describe("String Calculator", () => {
     it("allow the add method to handle an unknow number of arguments", () => {
         expect(add("1,2,3")).toBe("6")
     })
+
+    it("allow newLine as a separator", () => {
+        expect(add("1\n2,3")).toBe("6")
+    })
 })
