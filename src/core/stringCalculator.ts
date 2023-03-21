@@ -49,6 +49,14 @@ export const add = (theOperation: string) => {
     notAppearTwoSeparatorsTogetherIn(theOperation)
     separatorNotAppearAtLastPositionIn(theOperation)
 
+    if(theOperation.startsWith("//") && theOperation.includes(",") && theOperation.includes("\n") && getCustomSeparatorIn(theOperation)) {
+        const customSeparator = getCustomSeparatorIn(theOperation)
+        const numbers = getNumbersWithCustomSeparatorIn(theOperation)
+        const generalSeparator = numbers.split("").find(char => char === "," || char === "\n")
+        const generalSeparatorPos = numbers.indexOf(generalSeparator)
+        throw new Error(`'${customSeparator}' expected but '${generalSeparator}' found at position ${generalSeparatorPos}.`)
+    }
+
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
     const theOperationToIterate = getNumbersIn(theOperation)
