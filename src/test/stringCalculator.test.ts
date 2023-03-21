@@ -1,4 +1,4 @@
-import {add} from "../core/stringCalculator";
+import { add } from "../core/stringCalculator";
 
 describe("String Calculator", () => {
     it("should be '0' if received an empty parameter", () => {
@@ -19,5 +19,9 @@ describe("String Calculator", () => {
 
     it("allow newLine as a separator", () => {
         expect(add("1\n2,3")).toBe("6")
+    })
+
+    it("allow to sum numbers with decimals", () => {
+        expect(add("1.5,2.5")).toBe("4")
     })
 })
