@@ -8,6 +8,14 @@ const sumAllNumbersIn = (theOperationToIterate: number[]) => {
 }
 
 export const add = (theOperation: string) => {
+    const theOperationToCheck = theOperation.split("")
+    theOperationToCheck.forEach((char, index) => {
+        const previousChar = theOperationToCheck[index - 1] ?? "0"
+        if(char.match(/[,\n]/) && previousChar.match(/[,\n]/)) {
+            throw new Error(`Number expected but '${char}' found at position ${index}.`)
+        }
+    })
+
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
     const theOperationToIterate = getNumbersIn(theOperation)
