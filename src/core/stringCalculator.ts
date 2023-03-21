@@ -7,14 +7,21 @@ const sumAllNumbersIn = (theOperationToIterate: number[]) => {
     return theOperationToIterate.reduce(sumAll, 0)
 }
 
-export const add = (theOperation: string) => {
+const notAppearTwoSeparatorsTogetherIn = (theOperation: string) => {
     const theOperationToCheck = theOperation.split("")
     theOperationToCheck.forEach((char, index) => {
         const previousChar = theOperationToCheck[index - 1] ?? "0"
-        if(char.match(/[,\n]/) && previousChar.match(/[,\n]/)) {
+        const charIsSeparator = char.match(/[,\n]/)
+        const previousCharIsSeparator = previousChar.match(/[,\n]/)
+
+        if (charIsSeparator && previousCharIsSeparator) {
             throw new Error(`Number expected but '${char}' found at position ${index}.`)
         }
     })
+}
+
+export const add = (theOperation: string) => {
+    notAppearTwoSeparatorsTogetherIn(theOperation)
 
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
