@@ -1,11 +1,21 @@
+const getNumbersIn = (theOperation: string) => (
+    theOperation.split(",").map(number => parseInt(number))
+)
+
+const sumAllNumbersIn = (theOperationToIterate: number[]) => {
+    const sumAll = (allNumbersAdded, currentNumber) => allNumbersAdded += currentNumber
+    return theOperationToIterate.reduce(sumAll, 0)
+}
+
 export const add = (theOperation: string) => {
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
-    const theOperationToIterate = theOperation.split(",").map(number => parseInt(number))
+    const theOperationToIterate = getNumbersIn(theOperation)
+    const isPossibleToSum = theOperationIsNotEmpty && theOperationToIterate.length > 0
 
-    if(theOperationIsNotEmpty && theOperationToIterate.length > 0) {
-        const sum = theOperationToIterate.reduce((allNumbersAdded, currentNumber) => allNumbersAdded += currentNumber, 0);
-        return sum.toString()
+    if(isPossibleToSum) {
+        return sumAllNumbersIn(theOperationToIterate).toString()
     }
+
     return theOperationIsNotEmpty ? theOperation : emptyOperation
 }
