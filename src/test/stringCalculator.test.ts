@@ -44,4 +44,8 @@ describe("String Calculator with custom separators", () => {
     it("allow the method to handle a different delimiter", () => {
         expect(add("//;\n1;2")).toBe("3")
     })
+
+    it("allow the method to handle with a delimiter to have more than one length", () => {
+        expect(add("//sep\n2sep3")).toBe("5")
+    })
 })
