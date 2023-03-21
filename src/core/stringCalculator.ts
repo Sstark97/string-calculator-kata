@@ -1,3 +1,5 @@
 export const add = (theOperation: string) => {
-    return theOperation !== "" ? theOperation : "0"
+    const emptyOperation = "0";
+    const theOperationIsNotEmpty = theOperation !== "";
+    return theOperationIsNotEmpty ? theOperation : emptyOperation
 }
