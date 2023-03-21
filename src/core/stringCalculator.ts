@@ -1,5 +1,5 @@
 const getNumbersIn = (theOperation: string) => (
-    theOperation.split(",").map(number => parseInt(number))
+    theOperation.split(/[,\n]/).map(number => parseInt(number))
 )
 
 const sumAllNumbersIn = (theOperationToIterate: number[]) => {
