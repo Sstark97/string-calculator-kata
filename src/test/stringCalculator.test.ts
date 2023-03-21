@@ -12,4 +12,8 @@ describe("String Calculator", () => {
     it("should add two numbers separated by commas", () => {
         expect(add("1,2")).toBe("3")
     })
+
+    it("allow the add method to handle an unknow number of arguments", () => {
+        expect(add("1,2,3")).toBe("6")
+    })
 })
