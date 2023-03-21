@@ -39,3 +39,9 @@ describe("String Calculator", () => {
         expect(() => add("1,3,")).toThrow("Number expected but EOF found.")
     })
 })
+
+describe("String Calculator with custom separators", () => {
+    it("allow the method to handle a different delimiter", () => {
+        expect(add("//;\n1;2")).toBe("3")
+    })
+})
