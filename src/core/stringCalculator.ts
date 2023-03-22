@@ -14,7 +14,7 @@ const getNumbersIn = (theOperation: string) => {
     const numbersInTheOperation = haveCustomSeparator ? getNumbersWithCustomSeparatorIn(theOperation) : theOperation
     const currentSeparator = haveCustomSeparator ? getCustomSeparatorIn(theOperation) : /[,\n]/
 
-    return numbersInTheOperation.split(currentSeparator).map(number => parseFloat(number))
+    return numbersInTheOperation.split(currentSeparator).map(number => Number(number))
 }
 
 const sumAllNumbersIn = (theOperationToIterate: number[]) => {
@@ -37,27 +37,26 @@ const notAppearTwoSeparatorsTogetherIn = (theOperation: string) => {
 
 const separatorNotAppearAtLastPositionIn = (theOperation: string) => {
     const charAtLast = theOperation[theOperation.length - 1] ?? ""
-    const lastCharIsSeparator = charAtLast.match(/[,\n]/)
-    const theOperationIsNotEmpty = theOperation !== ""
+    const isLastCharacterASeparator = charAtLast.match(/[,\n]/)
 
-    if (theOperationIsNotEmpty && lastCharIsSeparator) {
+    if (isLastCharacterASeparator) {
         throw new Error("Number expected but EOF found.")
     }
 }
 
-const isHaveCustomAndGeneralDelimitersIn = (theOperation: string) => {
-    const haveCustomSeparator = theOperation.startsWith("//")
-    const haveGeneralSeparators = theOperation.includes(",") && theOperation.includes("\n")
+const isAnotherSeparatorIn = (theOperation: string) => {
     const customSeparator = getCustomSeparatorIn(theOperation)
-    return haveCustomSeparator && haveGeneralSeparators && customSeparator;
+    const numbers = getNumbersWithCustomSeparatorIn(theOperation).split(customSeparator)
+
+    return numbers.some(number => isNaN(Number(number)))
 }
 
 const getAnotherSeparatorIn = (numbers: string, separator: string) => (
-    numbers.split("").find(char => char !== separator && isNaN(parseFloat(char)))
+    numbers.split("").find(char => char !== separator && isNaN(Number(char)))
 )
 
 const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
-    if (isHaveCustomAndGeneralDelimitersIn(theOperation)) {
+    if (isAnotherSeparatorIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
         const customSeparator = getCustomSeparatorIn(theOperation)
         const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
@@ -69,7 +68,7 @@ const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
 export const add = (theOperation: string) => {
     notAppearTwoSeparatorsTogetherIn(theOperation)
     separatorNotAppearAtLastPositionIn(theOperation)
-    customDelimiterAndGeneralNotTogetherIn(theOperation);
+    customDelimiterAndGeneralNotTogetherIn(theOperation)
 
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
