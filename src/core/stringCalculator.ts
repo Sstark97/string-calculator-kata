@@ -52,17 +52,17 @@ const isHaveCustomAndGeneralDelimitersIn = (theOperation: string) => {
     return haveCustomSeparator && haveGeneralSeparators && customSeparator;
 }
 
-const getGeneralSeparatorIn = (numbers: string) => (
-    numbers.split("").find(char => char === "," || char === "\n")
+const getAnotherSeparatorIn = (numbers: string, separator: string) => (
+    numbers.split("").find(char => char !== separator && isNaN(parseFloat(char)))
 )
 
 const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
     if (isHaveCustomAndGeneralDelimitersIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
         const customSeparator = getCustomSeparatorIn(theOperation)
-        const generalSeparator = getGeneralSeparatorIn(numbers)
-        const generalSeparatorPos = numbers.indexOf(generalSeparator)
-        throw new Error(`'${customSeparator}' expected but '${generalSeparator}' found at position ${generalSeparatorPos}.`)
+        const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
+        const anotherSeparatorPos = numbers.indexOf(anotherSeparator)
+        throw new Error(`'${customSeparator}' expected but '${anotherSeparator}' found at position ${anotherSeparatorPos}.`)
     }
 }
 
