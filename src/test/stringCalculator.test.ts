@@ -58,4 +58,8 @@ describe("String Calculator with negative numbers", () => {
     it("should return an error message if there is a negative number", () =>{
         expect(() => add("-1,2")).toThrow("Negative not allowed : -1")
     })
+
+    it("should return an error message if there are a negative number", () =>{
+        expect(() => add("2,-4,-5")).toThrow("Negative not allowed : -4, -5")
+    })
 })
