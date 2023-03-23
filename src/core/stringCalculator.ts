@@ -17,7 +17,8 @@ const getNumbersIn = (theOperation: string) => {
     return numbersInTheOperation.split(currentSeparator).map(number => Number(number))
 }
 
-const sumAllNumbersIn = (theOperationToIterate: number[]) => {
+const sumAllNumbersIn = (theOperation: string) => {
+    const theOperationToIterate = getNumbersIn(theOperation)
     const sumAll = (allNumbersAdded, currentNumber) => allNumbersAdded += currentNumber
     return theOperationToIterate.reduce(sumAll, 0)
 }
@@ -56,7 +57,9 @@ const getAnotherSeparatorIn = (numbers: string, separator: string) => (
 )
 
 const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
-    if (getCustomSeparatorIn(theOperation) !== "" && isAnotherSeparatorIn(theOperation)) {
+    const isCustomSeparatorNotEmpty = getCustomSeparatorIn(theOperation) !== ""
+
+    if (isCustomSeparatorNotEmpty && isAnotherSeparatorIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
         const customSeparator = getCustomSeparatorIn(theOperation)
         const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
@@ -65,24 +68,25 @@ const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
     }
 }
 
+const checkIfThereAreNegativeNumbersFrom = (theOperation: string) => {
+    const theOperationToIterate = getNumbersIn(theOperation)
+    const negativeNumber = theOperationToIterate.find(number => number < 0)
+    if (negativeNumber) {
+        throw  new Error(`Negative not allowed : ${negativeNumber}`)
+    }
+}
+
 export const add = (theOperation: string) => {
     notAppearTwoSeparatorsTogetherIn(theOperation)
     separatorNotAppearAtLastPositionIn(theOperation)
     customDelimiterAndGeneralNotTogetherIn(theOperation)
+    checkIfThereAreNegativeNumbersFrom(theOperation)
 
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""
-    const theOperationToIterate = getNumbersIn(theOperation)
-    const isPossibleToSum = theOperationIsNotEmpty && theOperationToIterate.length > 0
 
-    const negativeNumber = theOperationToIterate.find(number => number < 0)
-
-    if(negativeNumber) {
-        throw  new Error(`Negative not allowed : ${negativeNumber}`)
-    }
-
-    if(isPossibleToSum) {
-        return sumAllNumbersIn(theOperationToIterate).toString()
+    if(theOperationIsNotEmpty) {
+        return sumAllNumbersIn(theOperation).toString()
     }
 
     return theOperationIsNotEmpty ? theOperation : emptyOperation

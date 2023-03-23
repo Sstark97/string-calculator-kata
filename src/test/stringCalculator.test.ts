@@ -57,5 +57,5 @@ describe("String Calculator with custom separators", () => {
 describe("String Calculator with negative numbers", () => {
     it("should return an error message if there is a negative number", () =>{
         expect(() => add("-1,2")).toThrow("Negative not allowed : -1")
-    });
+    })
 })
