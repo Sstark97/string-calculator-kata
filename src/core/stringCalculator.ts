@@ -71,9 +71,11 @@ const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
 const checkIfThereAreNegativeNumbersFrom = (theOperation: string) => {
     const theOperationToIterate = getNumbersIn(theOperation)
     const negativeNumbers = theOperationToIterate.filter(number => number < 0)
+    const haveNegativeNumbers = negativeNumbers.length > 0
 
-    if (negativeNumbers.length > 0) {
-        throw  new Error(`Negative not allowed : ${negativeNumbers.join(", ")}`)
+    if (haveNegativeNumbers) {
+        const negativeNumbersJoinedByCommas = negativeNumbers.join(", ")
+        throw  new Error(`Negative not allowed : ${negativeNumbersJoinedByCommas}`)
     }
 }
 
