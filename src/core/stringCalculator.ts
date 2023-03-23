@@ -56,7 +56,7 @@ const getAnotherSeparatorIn = (numbers: string, separator: string) => (
 )
 
 const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
-    if (isAnotherSeparatorIn(theOperation)) {
+    if (getCustomSeparatorIn(theOperation) !== "" && isAnotherSeparatorIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
         const customSeparator = getCustomSeparatorIn(theOperation)
         const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
@@ -74,6 +74,12 @@ export const add = (theOperation: string) => {
     const theOperationIsNotEmpty = theOperation !== ""
     const theOperationToIterate = getNumbersIn(theOperation)
     const isPossibleToSum = theOperationIsNotEmpty && theOperationToIterate.length > 0
+
+    const negativeNumber = theOperationToIterate.find(number => number < 0)
+
+    if(negativeNumber) {
+        throw  new Error(`Negative not allowed : ${negativeNumber}`)
+    }
 
     if(isPossibleToSum) {
         return sumAllNumbersIn(theOperationToIterate).toString()
