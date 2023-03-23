@@ -57,9 +57,9 @@ const getAnotherSeparatorIn = (numbers: string, separator: string) => (
 )
 
 const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
-    const isCustomSeparatorNotEmpty = getCustomSeparatorIn(theOperation) !== ""
+    const haveCustomSeparator = theOperation.startsWith("//")
 
-    if (isCustomSeparatorNotEmpty && isAnotherSeparatorIn(theOperation)) {
+    if (haveCustomSeparator && isAnotherSeparatorIn(theOperation)) {
         const numbers = getNumbersWithCustomSeparatorIn(theOperation)
         const customSeparator = getCustomSeparatorIn(theOperation)
         const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
@@ -72,7 +72,7 @@ const checkIfThereAreNegativeNumbersFrom = (theOperation: string) => {
     const theOperationToIterate = getNumbersIn(theOperation)
     const negativeNumbers = theOperationToIterate.filter(number => number < 0)
 
-    if (negativeNumbers) {
+    if (negativeNumbers.length > 0) {
         throw  new Error(`Negative not allowed : ${negativeNumbers.join(", ")}`)
     }
 }
