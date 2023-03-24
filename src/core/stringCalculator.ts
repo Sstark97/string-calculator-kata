@@ -25,15 +25,18 @@ const sumAllNumbersIn = (theOperation: string) => {
 
 const notAppearTwoSeparatorsTogetherIn = (theOperation: string) => {
     const theOperationToCheck = theOperation.split("")
+    let error = ""
     theOperationToCheck.forEach((char, index) => {
         const previousChar = theOperationToCheck[index - 1] ?? "0"
         const charIsSeparator = char.match(/[,\n]/)
         const previousCharIsSeparator = previousChar.match(/[,\n]/)
 
         if (charIsSeparator && previousCharIsSeparator) {
-            throw new Error(`Number expected but '${char}' found at position ${index}.`)
+            error += `Number expected but '${char}' found at position ${index}.\n`
         }
     })
+
+    return error
 }
 
 const separatorNotAppearAtLastPositionIn = (theOperation: string) => {
@@ -41,7 +44,7 @@ const separatorNotAppearAtLastPositionIn = (theOperation: string) => {
     const isLastCharacterASeparator = charAtLast.match(/[,\n]/)
 
     if (isLastCharacterASeparator) {
-        throw new Error("Number expected but EOF found.")
+        return "Number expected but EOF found.\n"
     }
 }
 
@@ -64,7 +67,7 @@ const customDelimiterAndGeneralNotTogetherIn = (theOperation: string) => {
         const customSeparator = getCustomSeparatorIn(theOperation)
         const anotherSeparator = getAnotherSeparatorIn(numbers, customSeparator)
         const anotherSeparatorPos = numbers.indexOf(anotherSeparator)
-        throw new Error(`'${customSeparator}' expected but '${anotherSeparator}' found at position ${anotherSeparatorPos}.`)
+        return `'${customSeparator}' expected but '${anotherSeparator}' found at position ${anotherSeparatorPos}.\n`
     }
 }
 
@@ -75,15 +78,20 @@ const checkIfThereAreNegativeNumbersFrom = (theOperation: string) => {
 
     if (haveNegativeNumbers) {
         const negativeNumbersJoinedByCommas = negativeNumbers.join(", ")
-        throw  new Error(`Negative not allowed : ${negativeNumbersJoinedByCommas}`)
+        return `Negative not allowed : ${negativeNumbersJoinedByCommas}\n`
     }
 }
 
 export const add = (theOperation: string) => {
-    notAppearTwoSeparatorsTogetherIn(theOperation)
-    separatorNotAppearAtLastPositionIn(theOperation)
-    customDelimiterAndGeneralNotTogetherIn(theOperation)
-    checkIfThereAreNegativeNumbersFrom(theOperation)
+    let error = ""
+    error += checkIfThereAreNegativeNumbersFrom(theOperation) ?? ""
+    error += notAppearTwoSeparatorsTogetherIn(theOperation) ?? ""
+    error += separatorNotAppearAtLastPositionIn(theOperation) ?? ""
+    error += customDelimiterAndGeneralNotTogetherIn(theOperation) ?? ""
+
+    if(error !== "") {
+        throw new Error(error.substring(0, error.length - 1))
+    }
 
     const emptyOperation = "0"
     const theOperationIsNotEmpty = theOperation !== ""

@@ -66,7 +66,6 @@ describe("String Calculator with negative numbers", () => {
 
 describe("String Calculator with multiple errors", () => {
     it("will return all error messages separated by newlines",() =>{
-        expect(() => add("-1,,2" )).toThrow("Negative not allowed : -1\n" +
-            "Number expected but ',' \n" + "found at position 3.")
+        expect(() => add("-1,,2" )).toThrow("Negative not allowed : -1\nNumber expected but ',' found at position 3.")
     });
 })
